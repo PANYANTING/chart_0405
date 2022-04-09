@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/drawable/shape_capsule.xml" value="0.21979166666666666" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/drawable/swich_true_track.xml" value="0.21979166666666666" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/drawable/switch_false_thumb.xml" value="0.21979166666666666" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/drawable/switch_false_track.xml" value="0.21979166666666666" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/drawable/switch_thumb.xml" value="0.21979166666666666" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/drawable/switch_track.xml" value="0.21979166666666666" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/drawable/switch_true_thumb.xml" value="0.21979166666666666" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/activity_main.xml" value="0.13903985507246377" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/fragment_add.xml" value="0.5" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/fragment_chart.xml" value="0.11820652173913043" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/fragment_detail.xml" value="0.11775362318840579" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/fragment_home.xml" value="0.2" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20364583333333333" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
