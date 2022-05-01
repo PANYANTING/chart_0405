@@ -10,12 +10,21 @@
         <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/drawable/switch_thumb.xml" value="0.21979166666666666" />
         <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/drawable/switch_track.xml" value="0.21979166666666666" />
         <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/drawable/switch_true_thumb.xml" value="0.21979166666666666" />
-        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/activity_main.xml" value="0.13903985507246377" />
-        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/fragment_add.xml" value="0.5" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/activity_mimi.xml" value="0.12907608695652173" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/allok.xml" value="0.1" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/dailog_detail.xml" value="0.33" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/dialog_detail.xml" value="0.109375" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/fragment_add.xml" value="0.25" />
         <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/fragment_chart.xml" value="0.11820652173913043" />
-        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/fragment_detail.xml" value="0.11775362318840579" />
-        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/fragment_home.xml" value="0.2" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/fragment_detail.xml" value="0.16" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/fragment_up_del.xml" value="0.22" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/item_detail.xml" value="0.25" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/kk.xml" value="0.1453804347826087" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/layout/try_0424.xml" value="0.12" />
         <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20364583333333333" />
+        <entry key="..\:/CAMPUS/110-2/project_2/chart_0405/app/src/main/res/menu/item_detail.xml" value="0.14322916666666666" />
       </map>
     </option>
   </component>
