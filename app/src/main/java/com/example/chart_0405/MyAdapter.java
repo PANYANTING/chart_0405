@@ -87,6 +87,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 dDB.deleteByIdEZ(mData.get(vHolder.getAdapterPosition()).getId());
                 mData.remove(vHolder.getAdapterPosition());
                 notifyItemRemoved(vHolder.getAdapterPosition());
+                dDB.close();
                 Log.i("adapter","dDB : " + dDB.showAll());
             }
         });

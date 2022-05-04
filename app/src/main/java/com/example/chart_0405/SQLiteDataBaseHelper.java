@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -83,10 +84,12 @@ public class SQLiteDataBaseHelper extends SQLiteOpenHelper {
                 + " WHERE Date =" + "'" + getDate + "'", null);
         String totalFee = "0";
         while (c.moveToNext()) {
-            ArrayList<Integer> sum = new ArrayList<>();
             totalFee = c.getString(0);
         }
-        return totalFee;
+        if(totalFee!=null){
+            return totalFee;
+        }
+        else {return "0";}
     }
 
     //取得有多少資料表,並以陣列回傳

@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+//import jackmego.com.jieba_android.JiebaSegmenter;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity
     ArrayList<HashMap<String, String>> getNowArray = new ArrayList<>();//取得被選中的項目資料
     String date;
     String totalFee;
+    ArrayList<String> wordList;
 
     ActivityMainBinding binding;
 
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        //JiebaSegmenter.init(getApplicationContext());
         mDB = new SQLiteDataBaseHelper(this, DB_NAME, null, DB_VERSION, TABLE_NAME);//初始化資料庫
         Log.d(TAG, "onCreate: "+mDB.showAll());
         mDB.chickTable();//確認是否存在資料表，沒有則新增
@@ -75,6 +78,8 @@ public class MainActivity extends AppCompatActivity
         bundle.putString("totalFee",totalFee);
         intent.putExtras(bundle);
 
+
+
         //取得今天的花費明細
         getNowArray = mDB.searchByDate(date);
 
@@ -95,6 +100,14 @@ public class MainActivity extends AppCompatActivity
                     break;
                 case R.id.home:
                     replaceFragment(new HomeFragment());
+                    //統計今天的總花費
+                    totalFee = mDB.getTotalFee(date);
+                    Log.i("MainActivity","totalFee : " + totalFee );
+
+                    //傳送今天總花費給home
+                    sintent.setClass(MainActivity.this,HomeFragment.class);
+                    bundle.putString("totalFee",totalFee);
+                    intent.putExtras(bundle);
                     break;
             }
 
