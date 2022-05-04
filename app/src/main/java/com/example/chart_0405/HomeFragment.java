@@ -5,7 +5,7 @@ import static android.app.Activity.RESULT_OK;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -20,15 +20,14 @@ import android.widget.EditText;
 import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.firestore.auth.User;
 import com.google.mlkit.common.sdkinternal.SharedPrefManager;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import jackmego.com.jieba_android.JiebaSegmenter;
 //import jackmego.com.jieba_android.JiebaSegmenter;
 
 public class HomeFragment extends Fragment {
@@ -41,6 +40,7 @@ public class HomeFragment extends Fragment {
     TextView todayFee;
     Button btn_talk;
     ArrayList<String> wordList;
+    String spokenText;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
         btn_talk = rootView.findViewById(R.id.talktomimi);
 
         btn_talk.setOnClickListener(v -> {
@@ -92,12 +93,11 @@ public class HomeFragment extends Fragment {
         if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
             List<String> results = data.getStringArrayListExtra(
                     RecognizerIntent.EXTRA_RESULTS);
-            String spokenText = results.get(0);
-            Toast.makeText(getView().getContext(), spokenText, Toast.LENGTH_SHORT).show();
+            spokenText = results.get(0);
             Log.i("home","talktomimi : " + spokenText);
-//            wordList = JiebaSegmenter.getJiebaSegmenterSingleton().getDividedString(spokenText);
-//            Log.i("main","wordList = "+wordList);
-
+            wordList = JiebaSegmenter.getJiebaSegmenterSingleton().getDividedString(spokenText);
+            Log.i("main","wordList = " +wordList);
+            Toast.makeText(getView().getContext(), wordList.get(0), Toast.LENGTH_SHORT).show();
         }
     }
 }

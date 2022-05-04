@@ -3,7 +3,7 @@ package com.example.chart_0405;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.database.sqlite.SQLiteDatabase;
-import android.databinding.tool.util.L;
+//import android.databinding.tool.util.L;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;

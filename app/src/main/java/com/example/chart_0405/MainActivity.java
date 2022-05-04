@@ -16,7 +16,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-//import jackmego.com.jieba_android.JiebaSegmenter;
+
+import jackmego.com.jieba_android.JiebaSegmenter;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        //JiebaSegmenter.init(getApplicationContext());
+        JiebaSegmenter.init(getApplicationContext());
         mDB = new SQLiteDataBaseHelper(this, DB_NAME, null, DB_VERSION, TABLE_NAME);//初始化資料庫
         Log.d(TAG, "onCreate: "+mDB.showAll());
         mDB.chickTable();//確認是否存在資料表，沒有則新增
