@@ -26,6 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import jackmego.com.jieba_android.JiebaSegmenter;
 //import jackmego.com.jieba_android.JiebaSegmenter;
@@ -39,13 +41,26 @@ public class HomeFragment extends Fragment {
     String totalFee;
     TextView todayFee;
     Button btn_talk;
-    ArrayList<String> wordList;
+    ArrayList<String> wordList = new ArrayList<>();
+    ArrayList<String> arrayList = new ArrayList<>();
+    ArrayList<String> notName = new ArrayList<>();
     String spokenText;
+    String date = getDate();
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        notName.add("吃");
+        notName.add("元");
+        notName.add("塊");
+        notName.add("買");
+        notName.add("了");
+        notName.add("交通");
+        notName.add("服飾");
+        notName.add("居家");
+        notName.add("學習");
+        notName.add("今天");
     }
 
     @Override
@@ -56,6 +71,7 @@ public class HomeFragment extends Fragment {
         btn_talk = rootView.findViewById(R.id.talktomimi);
 
         btn_talk.setOnClickListener(v -> {
+                arrayList.clear();
                 Toast.makeText(getView().getContext(), "正在跟Mimi講話", Toast.LENGTH_SHORT).show();
                 displaySpeechRecognizer();
         });
@@ -96,8 +112,92 @@ public class HomeFragment extends Fragment {
             spokenText = results.get(0);
             Log.i("home","talktomimi : " + spokenText);
             wordList = JiebaSegmenter.getJiebaSegmenterSingleton().getDividedString(spokenText);
-            Log.i("main","wordList = " +wordList);
-            Toast.makeText(getView().getContext(), wordList.get(0), Toast.LENGTH_SHORT).show();
+            Log.i("home","wordList = " +wordList);
+            String Type = convertType(wordList);
+            String Fee = convertFee(wordList);
+            String Name = convertName(wordList);
+            arrayList.add(date);
+            arrayList.add(Name);
+            arrayList.add(Type);
+            arrayList.add(Fee);
+            Log.i("home","arraylist : " + arrayList);
+            //new一個intent物件，指定切換的class
+            Intent intent = new Intent();
+            intent.setClass(getActivity().getBaseContext(), MainActivity.class);
+            //new一個bundle，傳送指定的物件
+            Bundle bundle = new Bundle();
+            bundle.putStringArrayList("arrayList1", arrayList);
+            //將bundle物件傳給intent
+            intent.putExtras(bundle);
+            startActivity(intent);
         }
     }
+
+    public String convertName(ArrayList<String> a){
+        String name="";
+        String fee = convertFee(a);
+        a.remove(fee);
+        for(int f = 0 ; f<notName.size() ; f++){
+            a.remove(notName.get(f));
+        }
+        for(int i = 0; i <a.size();i++){
+            name = name + a.get(i);
+        }
+        return name;
+    }
+
+    public String convertFee(ArrayList<String> a){
+        String fee="";
+        for(int i = 0; i<a.size();i++) {
+            if(isNumeric(a.get(i))){
+                fee = a.get(i);
+            }
+        }
+        return fee;
+    }
+
+    public String convertType(ArrayList a){
+        Log.i("home","arraylist : " + a);
+        String type;
+        if(a.indexOf("吃")!=-1){
+            type = "食";
+        }
+        else if(a.indexOf("交通")!=-1){
+            type = "行";
+        }
+        else if(a.indexOf("服飾")!=-1){
+            type = "衣";
+        }
+        else if(a.indexOf("居家")!=-1){
+            type = "住";
+        }
+        else if(a.indexOf("學習")!=-1){
+            type = "育";
+        }
+        else if(a.indexOf("娛樂")!=-1){
+            type = "樂";
+        }
+        else{
+            type = "其他";
+        }
+        return type;
+    }
+
+    public String getDate(){
+        long time=System.currentTimeMillis();//long now = android.os.SystemClock.uptimeMillis();
+        SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd");
+        java.util.Date d1=new Date(time);
+        String t1=format.format(d1);
+        return t1;
+    }
+
+    public boolean isNumeric(String str){
+        Pattern pattern = Pattern.compile("[0-9]*");
+        Matcher isNum = pattern.matcher(str);
+        if( !isNum.matches() ){
+            return false;
+        }
+        return true;
+    }
+
 }

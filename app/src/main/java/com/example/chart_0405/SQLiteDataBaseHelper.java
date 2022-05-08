@@ -1,11 +1,9 @@
 package com.example.chart_0405;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -38,7 +36,7 @@ public class SQLiteDataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(SQL);
     }
 
-    public void chickTable(){
+    public void checkTable(){
         Cursor cursor = getWritableDatabase().rawQuery("select DISTINCT tbl_name from sqlite_master where tbl_name ='" + TableName + "'",null);
         if(cursor !=null){
             if(cursor.getCount() ==0 )
@@ -77,9 +75,40 @@ public class SQLiteDataBaseHelper extends SQLiteOpenHelper {
         return arrayList;
     }
 
+    //讀取月總花費(chart)
+    public String getMonthChart(String year, String Month){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT Date, SUM(Fee) FROM MyTable WHERE Date LIKE '%" +year+"-"+Month+"%'" ,null);
+        String Mfee = "0";
+        while (c.moveToNext()) {
+            Mfee = c.getString(1);
+        }
+        if(Mfee!=null){
+            return Mfee;
+        }
+        else {return "0";}
+    }
+
+    //讀取月分類(piechart)
+    public ArrayList<HashMap<String,String>> getTypeFee(String year, String Month){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor c = db.rawQuery("SELECT Type,SUM(Fee) FROM " + TableName +
+                " WHERE Date LIKE '%" + year +"-" + Month +"%' GROUP BY Type",null);
+        ArrayList<HashMap<String,String>> TypeFee = new ArrayList<>();
+        while (c.moveToNext()){
+            HashMap<String,String> hashMap = new HashMap<>();
+            String type  = c.getString(0);
+            String fee= c.getString(1);
+            hashMap.put("type", type);
+            hashMap.put("fee", fee);
+            TypeFee.add(hashMap);
+        }
+        return TypeFee;
+    }
+
     //取得指定日期總花費金額
     public  String getTotalFee(String getDate){
-        SQLiteDatabase db = getWritableDatabase();
+        SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(" SELECT SUM(Fee) FROM " + TableName
                 + " WHERE Date =" + "'" + getDate + "'", null);
         String totalFee = "0";
@@ -90,21 +119,6 @@ public class SQLiteDataBaseHelper extends SQLiteOpenHelper {
             return totalFee;
         }
         else {return "0";}
-    }
-
-    //取得有多少資料表,並以陣列回傳
-    public ArrayList<String> getTables(){
-        Cursor cursor = getWritableDatabase().rawQuery(
-                "select DISTINCT tbl_name from sqlite_master", null);
-        ArrayList<String> tables = new ArrayList<>();
-        while (cursor.moveToNext()){
-            String getTab = new String (cursor.getBlob(0));
-            if (getTab.contains("android_metadata")){}
-            else if (getTab.contains("sqlite_sequence")){}
-            else tables.add(getTab.substring(0,getTab.length()-1));
-
-        }
-        return tables;
     }
 
     //顯示所有資料

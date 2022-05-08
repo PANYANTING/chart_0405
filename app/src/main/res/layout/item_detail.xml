@@ -11,7 +11,7 @@
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:src="@drawable/cantaloupe"
-            android:id="@+id/img_contact"/>
+            android:id="@+id/type_img"/>
 
         <LinearLayout
             android:layout_width="wrap_content"

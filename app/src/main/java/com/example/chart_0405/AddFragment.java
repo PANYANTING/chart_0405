@@ -68,7 +68,7 @@ public class AddFragment extends Fragment {
 
             //new一個bundle，傳送指定的物件
             Bundle bundle = new Bundle();
-            bundle.putStringArrayList("arrayList", arrayList);
+            bundle.putStringArrayList("arrayList1", arrayList);
 
             //將bundle物件傳給intent
             intent.putExtras(bundle);

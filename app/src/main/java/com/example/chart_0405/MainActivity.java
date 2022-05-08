@@ -26,7 +26,8 @@ public class MainActivity extends AppCompatActivity
     private String TABLE_NAME = "MyTable";
     private final int DB_VERSION = 1;
     SQLiteDataBaseHelper mDB;
-    ArrayList<String> arrayList = new ArrayList<>();//取得新增資料
+    ArrayList<String> arrayList = new ArrayList<>();//取得新增資料(手動add)
+    ArrayList<String> arrayList1 = new ArrayList<>();//取得新增資料(語音home)
     ArrayList<HashMap<String, String>> getNowArray = new ArrayList<>();//取得被選中的項目資料
     String date;
     String totalFee;
@@ -48,16 +49,21 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         JiebaSegmenter.init(getApplicationContext());
         mDB = new SQLiteDataBaseHelper(this, DB_NAME, null, DB_VERSION, TABLE_NAME);//初始化資料庫
-        Log.d(TAG, "onCreate: "+mDB.showAll());
-        mDB.chickTable();//確認是否存在資料表，沒有則新增
+        Log.d(TAG, "onCreate db showall: "+mDB.showAll());
+        mDB.checkTable();//確認是否存在資料表，沒有則新增
         arrayList.clear();//清空要新增資料的陣列
+        arrayList1.clear();
 
         //接收新增的資料
         Intent intent = getIntent();
         arrayList = intent.getStringArrayListExtra("arrayList");
+        arrayList1 = intent.getStringArrayListExtra("arrayList1");
         Log.i("MainActivity","From Add : " + arrayList);
+        Log.i("MainActivity","From Home : " + arrayList1);
         if(arrayList!=null){
             mDB.addData(arrayList);
+        }else if(arrayList1!=null){
+            mDB.addData(arrayList1);
         }
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
