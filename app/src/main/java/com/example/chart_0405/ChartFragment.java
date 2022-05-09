@@ -84,7 +84,7 @@ public class ChartFragment extends Fragment {
         }
 
         ArrayList<Integer>colors = new ArrayList<>();
-        for(int color: ColorTemplate.MATERIAL_COLORS){
+        for(int color: ColorTemplate.JOYFUL_COLORS){
             colors.add(color);
         }
         for(int color: ColorTemplate.VORDIPLOM_COLORS){

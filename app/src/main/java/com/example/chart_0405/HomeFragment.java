@@ -17,9 +17,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.github.clans.fab.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.auth.User;
 import com.google.mlkit.common.sdkinternal.SharedPrefManager;
 import java.text.SimpleDateFormat;
@@ -41,6 +45,7 @@ public class HomeFragment extends Fragment {
     String totalFee;
     TextView todayFee;
     Button btn_talk;
+    ImageView btnSearch;
     ArrayList<String> wordList = new ArrayList<>();
     ArrayList<String> arrayList = new ArrayList<>();
     ArrayList<String> notName = new ArrayList<>();
@@ -68,9 +73,11 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
-        btn_talk = rootView.findViewById(R.id.talktomimi);
 
-        btn_talk.setOnClickListener(v -> {
+        //btn_talk = rootView.findViewById(R.id.talktomimi);
+        btnSearch = rootView.findViewById(R.id.talktomimi);
+
+        btnSearch.setOnClickListener(v -> {
                 arrayList.clear();
                 Toast.makeText(getView().getContext(), "正在跟Mimi講話", Toast.LENGTH_SHORT).show();
                 displaySpeechRecognizer();
