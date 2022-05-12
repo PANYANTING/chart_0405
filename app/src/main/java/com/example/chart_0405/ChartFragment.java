@@ -2,6 +2,8 @@ package com.example.chart_0405;
 import android.graphics.Color;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +25,9 @@ import java.util.HashMap;
 
 public class ChartFragment extends Fragment {
     private PieChart pieChart;
-    TextView textView;
+    TextView tv_in;
+    TextView tv_out;
+    TextView fee;
     private final String DB_NAME = "MyList.db";
     private String TABLE_NAME = "MyTable";
     private final int DB_VERSION = 1;
@@ -31,6 +35,7 @@ public class ChartFragment extends Fragment {
     ArrayList<HashMap<String,String>>TF = new ArrayList<>();
     String Y = getYear();
     String M = getMonth();
+
 
 
     public ChartFragment() {
@@ -47,9 +52,17 @@ public class ChartFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_chart, container, false);
         cDB = new SQLiteDataBaseHelper(getActivity(), DB_NAME, null, DB_VERSION, TABLE_NAME);//初始化資料庫
+
+        int IN = Integer.valueOf(cDB.getMonthFee(Y,M,"in"));
+        int OUT = Integer.valueOf(cDB.getMonthFee(Y,M,"out"));
+        Log.i("chart","in" + (IN-OUT));
         pieChart = (PieChart) rootView.findViewById(R.id.chart);
-        textView = (TextView) rootView.findViewById(R.id.MFee);
-        textView.setText("本月總花費 : " + cDB.getMonthChart(Y,M) + "元");
+        tv_in = (TextView)rootView.findViewById(R.id.MFeein);
+        tv_out = (TextView) rootView.findViewById(R.id.MFeeout);
+        fee = (TextView) rootView.findViewById(R.id.MFee);
+        tv_in.setText("收入 $ " + IN);
+        tv_out.setText("支出 $ " + OUT);
+        fee.setText("損益 $ "+ (IN-OUT));
         setupPieChart();
         loadPieChartData();
 

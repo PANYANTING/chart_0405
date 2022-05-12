@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     Context mContext;
     List<Detail> mData;
     Dialog myDailog;
+    String out;
 
     public MyAdapter(Context mcontext,List<Detail> mData){
         this.mContext = mContext;
@@ -55,6 +57,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         vHolder.item_detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                out = mData.get(vHolder.getAdapterPosition()).getStatus();
+                Switch swBelow = (Switch) myDailog.findViewById(R.id.switch_Below);
                 EditText edName = (EditText) myDailog.findViewById(R.id.di_edName);
                 EditText edType = (EditText) myDailog.findViewById(R.id.di_edType);
                 EditText edFee = (EditText) myDailog.findViewById(R.id.di_edFee);
@@ -62,17 +66,29 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 edName.setText(mData.get(vHolder.getAdapterPosition()).getName());
                 edType.setText(mData.get(vHolder.getAdapterPosition()).getType());
                 edFee.setText(mData.get(vHolder.getAdapterPosition()).getFee());
-                Toast.makeText(parent.getContext(), "Test Click" + String.valueOf(vHolder.getAdapterPosition()), Toast.LENGTH_SHORT).show();
+                if(out.equals("in")){
+                    swBelow.setChecked(true);
+                }else {
+                    swBelow.setChecked(false);
+                }
+                //Toast.makeText(parent.getContext(), "Test Click" + String.valueOf(vHolder.getAdapterPosition()), Toast.LENGTH_SHORT).show();
+                swBelow.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                    if(isChecked){
+                        out = "in";
+                    }else {
+                        out = "out";
+                    }
+                });
                 myDailog.show();
                 modify.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         String Id = mData.get(vHolder.getAdapterPosition()).getId();
                         String Date = mData.get(vHolder.getAdapterPosition()).getDate();
-                        dDB.modify(Id,Date,edName.getText().toString(),edType.getText().toString(),edFee.getText().toString());
+                        dDB.modify(Id,Date,edName.getText().toString(),edType.getText().toString(),edFee.getText().toString(),out);
                         Toast.makeText(parent.getContext(),"修改成功!", Toast.LENGTH_SHORT).show();
                         Log.i("adapter","dDB : " + dDB.searchByDate(Date));
-                        mData.set(vHolder.getAdapterPosition(),new Detail(edName.getText().toString(),edType.getText().toString(),edFee.getText().toString()));
+                        mData.set(vHolder.getAdapterPosition(),new Detail(edName.getText().toString(),edType.getText().toString(),edFee.getText().toString(),out));
                         notifyDataSetChanged();
                         dDB.close();
                         myDailog.dismiss();//修改完關閉dialog

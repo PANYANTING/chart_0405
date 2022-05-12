@@ -91,13 +91,14 @@ public class DetailFragment extends Fragment {
         Log.i("DetailFragment", "getNowArray" + getNowArray);
         lstDetail = new ArrayList<>();
         //拆解getNowArray
-        for (int i = 0; i < getNowArray.size(); i++) {
+        for (int i = getNowArray.size()-1; i >= 0; i--) {
             ArrayList<String> aa = new ArrayList<>();
             aa.add(getNowArray.get(i).get("id"));
             aa.add(getNowArray.get(i).get("date"));
             aa.add(getNowArray.get(i).get("name"));
             aa.add(getNowArray.get(i).get("type"));
             aa.add(getNowArray.get(i).get("fee"));
+            aa.add(getNowArray.get(i).get("status"));
             lstDetail.add(new Detail(aa));
             Log.i("detail", "aa" + aa);
         }

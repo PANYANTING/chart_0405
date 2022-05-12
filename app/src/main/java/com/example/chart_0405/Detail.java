@@ -9,14 +9,16 @@ public class Detail {
     private String Name;
     private String Type;
     private String Fee;
+    private String Status;
 
     public Detail(){
     }
 
-    public Detail(String name, String type, String fee){
+    public Detail(String name, String type, String fee, String status){
         Name = name;
         Type = type;
         Fee = fee;
+        Status = status;
     }
 
     public Detail(ArrayList<String> a){
@@ -25,6 +27,7 @@ public class Detail {
         Name = a.get(2);
         Type = a.get(3);
         Fee = a.get(4);
+        Status = a.get(5);
 
     }
 
@@ -42,6 +45,8 @@ public class Detail {
     }
 
     public String getType(){return Type;}
+
+    public String getStatus(){return Status;}
 
     //Setter
 

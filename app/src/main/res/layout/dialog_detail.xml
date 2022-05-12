@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFBB77"
+        android:background="#FFD1A4"
         android:gravity="center_horizontal"
         android:orientation="vertical">
         <TextView
@@ -20,6 +20,24 @@
             android:text="編輯紀錄"
             android:textSize="24dp"
             android:textStyle="bold"/>
+        <LinearLayout
+            android:id="@+id/linearlayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/linearlayout">
+            <Switch
+                android:id="@+id/switch_Below"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:showText="true"
+                android:textOff="   支出   "
+                android:textOn="   收入   "
+                android:thumb="@drawable/switch_thumb"
+                android:track="@drawable/switch_track" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linearlayout3"

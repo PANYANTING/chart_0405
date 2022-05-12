@@ -25,7 +25,8 @@ public class SQLiteDataBaseHelper extends SQLiteOpenHelper {
                 "Date TEXT, " +
                 "Name TEXT, " +
                 "Type TEXT, " +
-                "Fee TEXT " +
+                "Fee TEXT, " +
+                "Status TEXT" +
                 ");";
         db.execSQL(SQLTable);//執行SQL指令
     }
@@ -45,7 +46,8 @@ public class SQLiteDataBaseHelper extends SQLiteOpenHelper {
                         "Date TEXT, " +
                         "Name TEXT, " +
                         "Type TEXT, " +
-                        "Fee TEXT " +
+                        "Fee TEXT, " +
+                        "Status TEXT " +
                         ");");
             cursor.close();
         }
@@ -64,21 +66,24 @@ public class SQLiteDataBaseHelper extends SQLiteOpenHelper {
             String name = c.getString(2);
             String type = c.getString(3);
             String fee = c.getString(4);
+            String status = c.getString(5);
 
             hashMap.put("id", id);
             hashMap.put("date", date);
             hashMap.put("name", name);
             hashMap.put("type", type);
             hashMap.put("fee", fee);
+            hashMap.put("status", status);
             arrayList.add(hashMap);
         }
         return arrayList;
     }
 
-    //讀取月總花費(chart)
-    public String getMonthChart(String year, String Month){
+    //讀取月總花費
+    public String getMonthFee(String year, String Month, String S){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor c = db.rawQuery("SELECT Date, SUM(Fee) FROM MyTable WHERE Date LIKE '%" +year+"-"+Month+"%'" ,null);
+        Cursor c = db.rawQuery("SELECT Date, SUM(Fee) FROM " + TableName +
+                " WHERE Date LIKE '%" +year+"-"+Month+"%' AND Status = '" + S + "'" ,null);
         String Mfee = "0";
         while (c.moveToNext()) {
             Mfee = c.getString(1);
@@ -93,7 +98,7 @@ public class SQLiteDataBaseHelper extends SQLiteOpenHelper {
     public ArrayList<HashMap<String,String>> getTypeFee(String year, String Month){
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery("SELECT Type,SUM(Fee) FROM " + TableName +
-                " WHERE Date LIKE '%" + year +"-" + Month +"%' GROUP BY Type",null);
+                " WHERE Date LIKE '%" + year +"-" + Month +"%' AND Status = 'out' GROUP BY Type",null);
         ArrayList<HashMap<String,String>> TypeFee = new ArrayList<>();
         while (c.moveToNext()){
             HashMap<String,String> hashMap = new HashMap<>();
@@ -110,7 +115,7 @@ public class SQLiteDataBaseHelper extends SQLiteOpenHelper {
     public  String getTotalFee(String getDate){
         SQLiteDatabase db = getReadableDatabase();
         Cursor c = db.rawQuery(" SELECT SUM(Fee) FROM " + TableName
-                + " WHERE Date =" + "'" + getDate + "'", null);
+                + " WHERE Date =" + "'" + getDate + "' AND Status = 'out' ", null);
         String totalFee = "0";
         while (c.moveToNext()) {
             totalFee = c.getString(0);
@@ -134,12 +139,14 @@ public class SQLiteDataBaseHelper extends SQLiteOpenHelper {
             String name = c.getString(2);
             String type  = c.getString(3);
             String fee= c.getString(4);
+            String status = c.getString(5);
 
             hashMap.put("id", id);
             hashMap.put("date", date);
             hashMap.put("name", name);
             hashMap.put("type",type);
             hashMap.put("fee", fee);
+            hashMap.put("status", status);
             arrayList.add(hashMap);
         }
         return arrayList;
@@ -155,22 +162,24 @@ public class SQLiteDataBaseHelper extends SQLiteOpenHelper {
     //新增資料
     public void addData(ArrayList arrayList) {
         SQLiteDatabase db = getWritableDatabase();
-        String Add = "INSERT INTO " + TableName + " (Date, Name, Type, Fee) VALUES ("
+        String Add = "INSERT INTO " + TableName + " (Date, Name, Type, Fee, Status) VALUES ("
                 + "'" + arrayList.get(0) + "', "
                 + "'" + arrayList.get(1) + "', "
                 + "'" + arrayList.get(2) + "', "
-                + "'" + arrayList.get(3) + "');";
+                + "'" + arrayList.get(3) + "', "
+                + "'" + arrayList.get(4) + "');";
         db.execSQL(Add);
     }
 
     //修改資料
-    public void modify(String id, String date, String name, String type, String fee) {
+    public void modify(String id, String date, String name, String type, String fee, String status) {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL(" UPDATE " + TableName
                 + " SET Date = " + "'" + date + "',"
                 + " Name = " + "'" + name + "',"
                 + " Type = " + "'" + type + "',"
-                + " Fee = " + "'" + fee + "'"
+                + " Fee = " + "'" + fee + "',"
+                + " Status = " + "'" + status + "'"
                 + " WHERE _id= " + "'" + id + "'");
     }
 
@@ -193,12 +202,14 @@ public class SQLiteDataBaseHelper extends SQLiteOpenHelper {
             String name = c.getString(2);
             String type = c.getString(3);
             String fee = c.getString(4);
+            String status = c.getString(5);
 
             hashMap.put("id", id);
             hashMap.put("date", date);
             hashMap.put("name", name);
             hashMap.put("type", type);
             hashMap.put("fee", fee);
+            hashMap.put("status", status);
             arrayList.add(hashMap);
         }
         return arrayList;

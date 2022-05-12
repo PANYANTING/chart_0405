@@ -34,6 +34,7 @@ public class AddFragment extends Fragment {
     String edDate;
     TextClock textClock;
     ArrayList<String> arrayList = new ArrayList<>();//取得新增資料
+    String out="out";
 
     public AddFragment() {
 
@@ -59,6 +60,7 @@ public class AddFragment extends Fragment {
 
         btCreate.setOnClickListener(v -> {
             arrayList = getValues();
+            arrayList.add(out);
             clearAll();
             Toast.makeText(getView().getContext(), "已新增紀錄", Toast.LENGTH_SHORT).show();
             Log.i("AddFragment", "arrayList: " + arrayList);
@@ -78,7 +80,12 @@ public class AddFragment extends Fragment {
         //收入支出紀錄切換
         Switch swBelow = rootView.findViewById(R.id.switch_Below);
         swBelow.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            Toast.makeText(getView().getContext(), "Sw2: " + isChecked, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getView().getContext(), "Sw2: " + isChecked, Toast.LENGTH_SHORT).show();
+            if(isChecked){
+                out = "in";
+            }else {
+                out = "out";
+            }
         });
 
         //預設日期:讀取系統時間

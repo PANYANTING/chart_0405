@@ -108,6 +108,7 @@ public class HomeFragment extends Fragment {
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         startActivityForResult(intent, SPEECH_REQUEST_CODE);
+
     }
 
     @Override
@@ -127,6 +128,7 @@ public class HomeFragment extends Fragment {
             arrayList.add(Name);
             arrayList.add(Type);
             arrayList.add(Fee);
+            arrayList.add("out");
             Log.i("home","arraylist : " + arrayList);
             //new一個intent物件，指定切換的class
             Intent intent = new Intent();
