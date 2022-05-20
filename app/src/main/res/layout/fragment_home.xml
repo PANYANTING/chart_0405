@@ -7,46 +7,90 @@
     android:background="@color/home"
     android:id="@+id/homef"
     tools:context=".HomeFragment">
+    <ImageView
+        android:id="@+id/backgroundview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/background" />
 
-        <LinearLayout
+
+    <LinearLayout
             android:id="@+id/linearlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
-            <TextClock
-                android:id="@+id/dateinhome"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:format12Hour="yyyy-MM-dd"
+                android:padding="10dp"
                 android:gravity="center"
-                android:textSize="30dp"
-                app:layout_constraintTop_toBottomOf="@id/title" />
+                android:orientation="horizontal">
+                <TextClock
+                    android:id="@+id/dateinhome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:format12Hour="yyyy-MM-dd"
+                    android:gravity="center"
+                    android:textSize="12dp" />
 
-            <TextView
-                android:id="@+id/totalFee"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/teal_200"
-                android:gravity="center"
-                android:text="   "
-                android:textSize="32dp" />
+                <TextView
+                    android:id="@+id/totalFee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:padding="10dp"
+                    android:gravity="center"
+                    android:text="123"
+                    android:textSize="12dp" />
+
+                <ImageView
+                    android:id="@+id/callmimi"
+                    android:layout_width="90dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/button_floating"
+                    android:layout_marginLeft="50dp"
+                    android:gravity="right"
+                    android:padding="10dp" />
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:id="@+id/rly"
                 android:layout_gravity="bottom"
-                android:layout_alignParentBottom="true"
-                app:layout_constraintTop_toBottomOf="@id/linearlayout">
+                android:layout_alignParentBottom="true">
+
 
                 <ImageView
                     android:id="@+id/imageview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     app:srcCompat="@drawable/home_mimi" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:src="@drawable/chat1" />
+
+
+                <TextView
+                    android:id="@+id/mimisay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="60dp"
+                    android:text="123111111111111111111111111111111111111111111111111"
+                    android:textSize="15dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -57,11 +101,11 @@
                     android:layout_alignParentBottom="true">
 
                     <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_margin="20dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_margin="10dp"
                         android:src="@drawable/ic_baseline_mic_24"
-                        android:padding="20dp"
+                        android:padding="15dp"
                         android:id="@+id/talktomimi"
                         android:background="@drawable/shape_round"
                         android:layout_alignTop="@+id/imageview"

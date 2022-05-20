@@ -2,22 +2,28 @@ package com.example.chart_0405;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.provider.Settings;
 import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,13 +36,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import jackmego.com.jieba_android.JiebaSegmenter;
-//import jackmego.com.jieba_android.JiebaSegmenter;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment{
     private int SPEECH_REQUEST_CODE = 0;
 
     public HomeFragment(){}
@@ -44,14 +50,16 @@ public class HomeFragment extends Fragment {
     TextClock textClock;
     String totalFee;
     TextView todayFee;
-    Button btn_talk;
+    TextView mimisay;
+    ImageView btnCallmimi;
     ImageView btnSearch;
+    LinearLayout layout;
     ArrayList<String> wordList = new ArrayList<>();
     ArrayList<String> arrayList = new ArrayList<>();
     ArrayList<String> notName = new ArrayList<>();
+    ArrayList<String> mimi = new ArrayList<>();
     String spokenText;
     String date = getDate();
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,26 +69,59 @@ public class HomeFragment extends Fragment {
         notName.add("塊");
         notName.add("買");
         notName.add("了");
-        notName.add("交通");
-        notName.add("服飾");
-        notName.add("居家");
-        notName.add("學習");
+        notName.add("午");
+        notName.add("餐");
+        notName.add("中");
+        notName.add("上");
         notName.add("今天");
+        mimi.add("主人好，開啟網路才能語音記帳喔");
+        mimi.add("我是蜜蜜瓜，你要不要吃哈密瓜?");
+        mimi.add("主人今天記帳了嗎？養成記帳的習慣月底才不會吃泡麵喔");
+        mimi.add("語音紀錄「食」類別的時候，一定要說到關鍵字「吃」喔!例如：今天午餐吃牛肉麵90元。");
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
+        mimisay = rootView.findViewById(R.id.mimisay);
+        layout = rootView.findViewById(R.id.linearlayout);
+        mimispeak();
 
-        //btn_talk = rootView.findViewById(R.id.talktomimi);
+        btnCallmimi = rootView.findViewById(R.id.callmimi);
         btnSearch = rootView.findViewById(R.id.talktomimi);
 
         btnSearch.setOnClickListener(v -> {
                 arrayList.clear();
                 Toast.makeText(getView().getContext(), "正在跟Mimi講話", Toast.LENGTH_SHORT).show();
                 displaySpeechRecognizer();
+        });
+
+        btnCallmimi.setOnClickListener(v -> {
+            if(!Settings.canDrawOverlays(getContext())){
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                alertDialog.setTitle("！蜜蜜瓜提醒！");
+                alertDialog.setMessage("召喚蜜蜜瓜之前要到設定先開啟懸浮式窗的權限喔(｡•̀ᴗ-)✧");
+                alertDialog.setPositiveButton("知道了！", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(getActivity().getBaseContext(),"確定",Toast.LENGTH_SHORT).show();
+                    }
+                });
+                alertDialog.setCancelable(false);
+                alertDialog.show();
+            }else{
+                getActivity().startService(new Intent(getActivity(),FloatingViewService.class));
+            }
+
+        });
+
+        layout.setOnClickListener(v ->{
+            Log.i("Home","mimi is touched！");
+            mimispeak();
         });
 
 
@@ -100,8 +141,18 @@ public class HomeFragment extends Fragment {
         super.onStart();
         //顯示在螢幕上
         todayFee = getActivity().findViewById(R.id.totalFee);
-        todayFee.setText("今日花費" + totalFee + " 元");
+        todayFee.setText("$" + totalFee );
     }
+
+    public void mimispeak(){
+        final int min = 0;
+        final int max = 3;
+        final int random = new Random().nextInt((max - min) + 1) + min;
+        String mimisays = mimi.get(random);
+        mimisay.setText(mimisays);
+        Log.i("Home","mimi says : " + mimisays);
+    }
+
 
     private void displaySpeechRecognizer() {
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -208,5 +259,6 @@ public class HomeFragment extends Fragment {
         }
         return true;
     }
+
 
 }

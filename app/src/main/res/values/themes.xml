@@ -2,11 +2,11 @@
     <!-- Base application theme. -->
     <style name="Theme.Chart_0405" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/home</item>
+        <item name="colorPrimary">#73BF00</item>
         <item name="colorPrimaryVariant">@color/home</item>
         <item name="colorOnPrimary">@color/home</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/home</item>
+        <item name="colorSecondary">#FFAF60</item>
         <item name="colorSecondaryVariant">@color/home</item>
         <item name="colorOnSecondary">@color/home</item>
         <!-- Status bar color. -->
