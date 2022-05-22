@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.provider.Settings;
 import android.speech.RecognizerIntent;
 import android.util.Log;
@@ -32,6 +33,12 @@ import com.github.clans.fab.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.auth.User;
 import com.google.mlkit.common.sdkinternal.SharedPrefManager;
+import com.opencsv.CSVReader;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,6 +64,9 @@ public class HomeFragment extends Fragment{
     ArrayList<String> wordList = new ArrayList<>();
     ArrayList<String> arrayList = new ArrayList<>();
     ArrayList<String> notName = new ArrayList<>();
+    ArrayList<String> clothes = new ArrayList<>();
+    ArrayList<String> home = new ArrayList<>();
+    ArrayList<String> trans = new ArrayList<>();
     ArrayList<String> mimi = new ArrayList<>();
     String spokenText;
     String date = getDate();
@@ -64,16 +74,10 @@ public class HomeFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        notName.add("吃");
-        notName.add("元");
-        notName.add("塊");
-        notName.add("買");
-        notName.add("了");
-        notName.add("午");
-        notName.add("餐");
-        notName.add("中");
-        notName.add("上");
-        notName.add("今天");
+        setNotName();
+        setClothes();
+        setHome();
+        setTrans();
         mimi.add("主人好，開啟網路才能語音記帳喔");
         mimi.add("我是蜜蜜瓜，你要不要吃哈密瓜?");
         mimi.add("主人今天記帳了嗎？養成記帳的習慣月底才不會吃泡麵喔");
@@ -86,6 +90,7 @@ public class HomeFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
 
         mimisay = rootView.findViewById(R.id.mimisay);
         layout = rootView.findViewById(R.id.linearlayout);
@@ -170,16 +175,19 @@ public class HomeFragment extends Fragment{
                     RecognizerIntent.EXTRA_RESULTS);
             spokenText = results.get(0);
             Log.i("home","talktomimi : " + spokenText);
+            String Type = convertType(spokenText);
             wordList = JiebaSegmenter.getJiebaSegmenterSingleton().getDividedString(spokenText);
             Log.i("home","wordList = " +wordList);
-            String Type = convertType(wordList);
+
             String Fee = convertFee(wordList);
             String Name = convertName(wordList);
+
             arrayList.add(date);
             arrayList.add(Name);
             arrayList.add(Type);
             arrayList.add(Fee);
             arrayList.add("out");
+
             Log.i("home","arraylist : " + arrayList);
             //new一個intent物件，指定切換的class
             Intent intent = new Intent();
@@ -216,30 +224,25 @@ public class HomeFragment extends Fragment{
         return fee;
     }
 
-    public String convertType(ArrayList a){
-        Log.i("home","arraylist : " + a);
-        String type;
-        if(a.indexOf("吃")!=-1){
+    public String convertType(String a){
+        Log.i("home","spokenText : " + a);
+        String type ="";
+        if(a.indexOf("吃")!=-1 || a.indexOf("喝")!=-1){
             type = "食";
         }
-        else if(a.indexOf("交通")!=-1){
-            type = "行";
-        }
-        else if(a.indexOf("服飾")!=-1){
+        else if(isClothes(a)){
             type = "衣";
         }
-        else if(a.indexOf("居家")!=-1){
+        else if(isHome(a)){
             type = "住";
         }
-        else if(a.indexOf("學習")!=-1){
-            type = "育";
-        }
-        else if(a.indexOf("娛樂")!=-1){
-            type = "樂";
+        else if(isTrans(a)){
+            type = "行";
         }
         else{
             type = "其他";
         }
+
         return type;
     }
 
@@ -251,6 +254,66 @@ public class HomeFragment extends Fragment{
         return t1;
     }
 
+
+
+    public void setNotName(){
+        notName.add("吃");
+        notName.add("喝");
+        notName.add("元");
+        notName.add("塊");
+        notName.add("買");
+        notName.add("繳");
+        notName.add("搭");
+        notName.add("了");
+        notName.add("早餐");
+        notName.add("午餐");
+        notName.add("中餐");
+        notName.add("晚餐");
+        notName.add("宵夜");
+        notName.add("早上");
+        notName.add("中午");
+        notName.add("晚上");
+        notName.add("今天");
+    }
+
+    public void setClothes(){
+        clothes.add("衣服");
+        clothes.add("t-shirt");
+        clothes.add("短褲");
+        clothes.add("褲");
+        clothes.add("裙");
+        clothes.add("裙子");
+        clothes.add("襪");
+        clothes.add("襪子");
+        clothes.add("褲襪");
+        clothes.add("絲襪");
+        clothes.add("長襪");
+        clothes.add("短裙");
+        clothes.add("牛仔");
+        clothes.add("領帶");
+        clothes.add("襯衫");
+        clothes.add("西裝");
+        clothes.add("外套");
+        clothes.add("羽絨衣");
+    }
+
+    public void setHome() {
+        home.add("房租");
+        home.add("水電");
+    }
+
+    public void setTrans() {
+        trans.add("火車");
+        trans.add("台鐵");
+        trans.add("高鐵");
+        trans.add("公車");
+        trans.add("客運");
+        trans.add("機票");
+        trans.add("船票");
+        trans.add("叫車");
+        trans.add("叫uber");
+    }
+
     public boolean isNumeric(String str){
         Pattern pattern = Pattern.compile("[0-9]*");
         Matcher isNum = pattern.matcher(str);
@@ -260,5 +323,41 @@ public class HomeFragment extends Fragment{
         return true;
     }
 
+    public boolean isClothes(String str){
+        boolean isC = false;
+        for(int i = 0 ; i < clothes.size() ; i++){
+            if( str.contains(clothes.get(i))){
+                isC = true;
+                break;
+            }
+            else isC = false;
+            continue;
+        }
+        return isC;
+    }
 
+    public boolean isHome(String str){
+        boolean ishome = false;
+        for(int i = 0 ; i < home.size() ; i++){
+            if(str.contains(home.get(i))){
+                ishome = true;
+                break;
+            }
+            else ishome = false;
+        }
+
+        return ishome;
+    }
+
+    public boolean isTrans(String str){
+        boolean istrans = false;
+        for(int i = 0 ; i < trans.size() ; i++){
+            if(str.contains(trans.get(i))){
+                istrans = true;
+                break;
+            }
+            else istrans = false;
+        }
+        return istrans;
+    }
 }
